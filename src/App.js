@@ -1,47 +1,54 @@
-import logo from './logo.svg';
 import './App.css';
 import { Component } from 'react';
+import { PostCard } from './components/PostCard';
 
 class App extends Component {
-    state = {
-      name: 'Otávio Miranda',
-      counter: 0
-    };
-  
+  state = {
+    posts: []
+  };
 
-  handlePClick = () => {
-    this.setState({ name: 'Júnior'});
+
+
+  componentDidMount() {
+    this.loadPosts().then()
   }
 
-  handleAClick = (event) => {
-    event.preventDefault();
-    const { counter } = this.state;
-    this.setState({ counter: counter + 1 });
+  loadPosts = async () => {
+    const postsResponse = fetch('https://jsonplaceholder.typicode.com/posts');
+    const photosResponse = fetch('https://jsonplaceholder.typicode.com/photos');
+
+    const [posts, photos] = await Promise.all([postsResponse, photosResponse]);
+
+    const postsJson = await posts.json();
+    const photosJson = await photos.json();
+
+    const postsAndPhotos = postsJson.map((post, index) => {
+      return { ...post, cover: photosJson[index].url }
+    });
+
+    this.setState({ posts: postsAndPhotos });
   }
 
-  render(){
-    const { name, counter } = this.state.name;
+  render() {
+    const { posts } = this.state;
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p onClick={this.handlePClick}> 
-          {name} {counter}
-        </p>
-        <a
-          onClick={this.handleAClick}
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Este é o link
-        </a>
-      </header>
-    </div>
-  );
-}}
+    return (
+      <section className="container">
+        <div className="posts">
+          {posts.map(post => (
+            <PostCard
+              atributo={post.title}
+              body={post.body}
+              id={post.id}
+              cover={post.cover}
+            />
+          ))}
+        </div>
+      </section>
+
+    );
+  }
+}
 
 /*
 function App() {
