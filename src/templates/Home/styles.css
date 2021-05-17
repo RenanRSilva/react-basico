@@ -12,3 +12,11 @@
   display: flex;
   align-items: flex-end;
 }
+
+.search-Container {
+  margin-bottom: 30px;
+}
+
+.search-Container h1 {
+  margin-bottom: 30px;
+}
