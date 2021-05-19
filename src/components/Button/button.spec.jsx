@@ -1,6 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Button } from '.';
+import React from 'react';
+
  
 describe('<Button />', () => {
   it('should render the button with the test "Load more"', () => {

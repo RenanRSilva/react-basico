@@ -1,48 +1,21 @@
-import { Posts } from '.'
 
-const { render, screen } = require('@testing-library/react');
+import { render, screen } from '@testing-library/react';
+import { PostCard } from '.';
+import { postCardPropsMock } from './mock';
 
-const props = {
-  posts: [
-  {
-    id: 1,
-    title: 'title1 ',
-    body: 'body 1',
-    cover: 'img/img2.png'
-  },
-  {
-    id: 2,
-    title: 'title1 ',
-    body: 'body 1',
-    cover: 'img/img2.png'
-  },
-  {
-    id: 3,
-    title: 'title1 ',
-    body: 'body 1',
-    cover: 'img/img2.png'
-  },
-  ]
-};
+const props = postCardPropsMock;
 
-describe ('<Posts />', ()=> {
-  it('should render posts', () => {
-    render(<Posts {...props}/>);
+describe('<PostCard />', () => {
+  it('should render PostCard correctly', () => {
+    render(<PostCard {...props} />);
 
-    expect(screen.getAllByRole('heading', {name: /title/i }))
-    .toHaveLenght(3);
-    expect(screen.getAllByRole('img', {name: /title/i }))
-    .toHaveLenght(3);
-    expect(screen.getAllByRole(/title/i ))
-    .toHaveLenght(3);
-    expect(screen.getAllByRole('img', { name: /title/i }))
-    .toHaveLenght('src', 'img/img3.png');
+    expect(screen.getByAltText(/title 1/i)).toHaveAttribute('src', 'img/img.png');
+    expect(screen.getByRole('heading', { name: 'title 1 1' })).toBeInTheDocument();
+    expect(screen.getByText('body 1')).toBeInTheDocument();
   });
-  
-  
-  it('should match snapshot', () => {
-    const {container} = render(<Posts {...props}/>);
 
+  it('should match snapshot', () => {
+    const { container } = render(<PostCard {...props} />);
     expect(container.firstChild).toMatchSnapshot();
   });
 });
