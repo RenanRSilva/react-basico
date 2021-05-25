@@ -6,23 +6,42 @@ const s = {
   },
 };
 
-const Parent = ({ children }) => {
-  return Children.map(children, (child) => {
-    const newChild = cloneElement(child, { .
-      ...s,
-      joaozinho: '123',
-      cuidado: () => 123,
+const TurnOnOff = ({ children }) => {
+  const [isOn, setIsOn] = useState(false);
+  const onTurn = () => setIsOn(s => !s);
+
+  return Children.map(children, child => {
+    const newChild = cloneEelemnt(child, {
+      isOn,
+      onTurn
     });
-    return child
+    return child;
   });
 };
+const TurnedOn = ({ isOn, children }) => isOn ? children : null;
+
+const TurnedOff = ({ isOn, children }) => isOn ? null : children;
+const TurnButton = ({ isOn, onTurn, ...props}) => {
+  return (
+  <button onClick={onTurn} {...props}>Turn {isOn ? 'OFF' : 'ON'}</button>
+  );
+};
+
+const P = ({ children }) => <p {...s}>{children}</p>
+
 
 export const Home = () => {
   return (
-  <Parent>
-    <p>Oi</p>
-    <p>Oi 2</p>
-    <span>Olá</span>
-  </Parent>
+  <TurnOnOff>
+    <TurnedOn>
+     <P>As coisas que vão acontecer quando estiver ON</P> 
+    </TurnedOn>
+    <TurnedOff>
+      Aqui vem as coisas do off
+    </TurnedOff>
+    <TurnButton {...s} />
+  </TurnOnOff>
   );
 };
+
+export default
