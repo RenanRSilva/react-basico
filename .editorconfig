@@ -8,5 +8,9 @@ indent_style = space
 indent_size = 2
 end_of_line = lf
 charset = utf-8
+<<<<<<< HEAD
 trim_trailing_whitespace = true
+=======
+trim_trailing_whitespace = false
+>>>>>>> 5e4924b2e8179cad87009e9e8d62cafa5458a865
 insert_final_newline = false
